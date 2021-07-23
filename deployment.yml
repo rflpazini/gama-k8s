@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gama-deployment
+  labels:
+    app: gama-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: gama-api
+  template:
+    metadata:
+      labels:
+        app: gama-api
+    spec:
+      containers:
+      - name: gama-api
+        image: rflpazini/jenkins-node-sample:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: PORT
+          valueFrom: 
+            configMapKeyRef:
+              name: gama-config-api
+              key: port
+
+ 
